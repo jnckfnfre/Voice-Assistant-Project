@@ -42,6 +42,6 @@ class ReminderDictionary:
     def getAllReminders(self):
         return self.data
 
-    def deleteAllRemidners(self):
+    def deleteAllReminders(self):
         self.data = {}
         self.next_id = 1

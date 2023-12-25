@@ -19,7 +19,7 @@ def recognize_from_file(audioFile, reminderTextFile):
         # listen for the data (load audio to memory)
         audio_data = r.record(source)
         # recognize (convert from speech to text)
-        text = r.recognize_google(audio_data)
+        text = r.recognize_google(audio_data) 
 
     with open(reminderTextFile, "w") as outputFile:
         outputFile.write(text)
