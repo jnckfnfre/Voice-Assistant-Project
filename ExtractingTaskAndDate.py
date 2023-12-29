@@ -1,3 +1,5 @@
+import sys
+import nlp
 import spacy
 import dateparser
 from spacy.matcher import Matcher
@@ -95,9 +97,11 @@ def handle_duration_approach(doc, matches):
         print("duration approach")
 
 def extract_task_and_date(text):
-    print(text)
+
     nlp = spacy.load("en_core_web_sm")
+    print(nlp)
     matcher = Matcher(nlp.vocab)
+    print(matcher)
 
     # Updated Pattern for "Remind me to" and "Set a reminder to"
     pattern1 = [
@@ -122,24 +126,20 @@ def extract_task_and_date(text):
     matcher.add("REMINDER_TASK", [pattern1])
     doc = nlp(text)
     matches = matcher(doc)
-    print(matches)
-    for match_id, start, end in matches:
-        print("Match found:", nlp.vocab.strings[match_id], "Text:", doc[start:end].text)
+    print(matcher)
+
     has_pattern1 = False
     has_pattern2 = False
     for match_id, start, end in matches:
         if nlp.vocab.strings[match_id] == "REMINDER_TASK":
             has_pattern1 = True
-            print("Pattern1 (REMINDER_TASK) Matched")
         elif nlp.vocab.strings[match_id] == "REMINDER_DURATION":
             has_pattern2 = True
     print(has_pattern2)
     print(has_pattern1)
     if has_pattern2:
-        print("duration")
         return handle_duration_approach(doc, matches)
     elif has_pattern1:
-        print("pattern1")
         return pattern1_approach(doc, matches)
 
 if __name__ == "__main__":
